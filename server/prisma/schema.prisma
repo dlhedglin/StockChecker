@@ -8,12 +8,22 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["nativeTypes"]
 }
 
 model Item {
-  id        Int     @id @default(autoincrement())
-  name      String
-  url   String
-  keyword String
+  id       Int     @id @default(autoincrement())
+  name     String
+  url      String
+  keyword  String
   in_stock Boolean @default(false)
+  prices   Price[]
+}
+
+model Price {
+  id     Int     @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  price  Decimal
+  item   Item    @relation(fields: [itemId], references: [id])
+  itemId Int // relation scalar field  (used in the `@relation` attribute above)
 }
