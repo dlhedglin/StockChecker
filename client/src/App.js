@@ -27,11 +27,23 @@ class App extends Component {
     super(props);
     this.state = {
       items: [],
+      prices: {
+        labels: [],
+        datasets: [
+          {
+            label: "# of Votes",
+            data: [],
+            fill: false,
+            backgroundColor: "rgb(255, 99, 132)",
+            borderColor: "rgba(255, 99, 132, 0.2)",
+          },
+        ],
+      },
     };
 
     this.getItems = this.getItems.bind(this);
   }
-  componentDidMount() {
+  componentDidMount () {
     this.getItems();
     this.setState();
   }
@@ -55,7 +67,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Tables items={this.state.items} getItems={this.getItems} />
+        <Tables
+          items={this.state.items}
+          prices={this.state.prices}
+          getItems={this.getItems}
+          getPrices={this.getPrices}
+        />
       </div>
     );
   }

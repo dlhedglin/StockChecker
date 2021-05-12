@@ -23,6 +23,23 @@ app.get("/api/products", async (req, res, next) => {
   const items = await prisma.item.findMany();
   res.json(items);
 });
+app.get("/api/prices", async (req, res, next) => {
+  // const prices = await prisma.price.findMany({
+  //   where: {
+  //     itemId: parseInt(req.query["id"]),
+  //   },
+  // });
+  const prices = await prisma.price.findMany({
+    where: {
+      itemId: parseInt(req.query["id"]),
+    },
+    orderBy: {
+      timestamp: 'asc'
+    }
+  });
+
+  res.json(prices);
+});
 
 app.get("/api/query", async (req, res, next) => {
   const items = await prisma.item.findMany();
@@ -41,23 +58,40 @@ app.get("/api/query", async (req, res, next) => {
     items.map(async (item) => {
       return await getHtml(item["url"], item["keyword"]);
     })
-  )
+  );
+  let date = new Date();
   for (i = 0; i < items.length; i++) {
+    let inStock =
+      scraper.checkWord(results[i], items[i]["keyword"]) == -1 ? true : false;
     await prisma.item.update({
       where: {
         id: items[i]["id"],
       },
       data: {
-        in_stock: scraper.checkWord(results[i], items[i]["keyword"]) == -1 ? true : false,
-        prices:{
-          create:{
-            price: scraper.parseData(results[i])
-          }
-        }
+        in_stock: inStock,
       },
     });
-
-
+    await prisma.price.upsert({
+      where: {
+        itemId_year_month_day: {
+          itemId: items[i]["id"],
+          year: date.getFullYear(),
+          month: date.getMonth(),
+          day: date.getDate(),
+        },
+      },
+      update: {
+        price: scraper.parseData(results[i], items[i]["url"]),
+      },
+      create: {
+        itemId: items[i]["id"],
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        day: date.getDate(),
+        price: scraper.parseData(results[i], items[i]["url"]),
+      },
+    });
+    // await prisma.price
     // console.log(results[i]);
     // if (results[i] == -1) {
     //   var message = {
@@ -79,9 +113,6 @@ app.post("/api/create", async (req, res, next) => {
       name: req.body.name,
       url: req.body.url,
       keyword: req.body.keyword,
-      prices: {
-        create: [{ price: new Prisma.Decimal(99.99) }],
-      },
     },
   });
   res.json(createItem);

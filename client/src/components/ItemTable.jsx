@@ -3,6 +3,7 @@ import { Table, Button, Form, Spinner, Col, Row, Card } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import axios from "axios";
+import PriceChart from "./PriceChart";
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -13,6 +14,7 @@ class ItemTable extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.updateItems = this.updateItems.bind(this);
     this.state = {
+      autoRef: false,
       selected: [],
       name: "",
       url: "",
@@ -100,6 +102,9 @@ class ItemTable extends Component {
   }
 
   updateItems() {
+    if (this.state.refreshing) {
+      return;
+    }
     this.setState({ refreshing: true, items: [] });
     axios({
       method: "GET",
@@ -132,6 +137,26 @@ class ItemTable extends Component {
         console.log(error);
       });
   }
+
+  startAutoRefresh = () => {
+    this.intervalID = setInterval(() => {
+      this.updateItems();
+    }, 10000);
+    this.setState({ autoRef: true });
+  };
+
+  stopAutoRefresh = () => {
+    clearInterval(this.intervalID);
+    this.setState({ autoRef: false });
+  };
+
+  changeAutoRefresh = () => {
+    if (!this.state.autoRef) {
+      this.startAutoRefresh();
+    } else {
+      this.stopAutoRefresh();
+    }
+  };
 
   render() {
     const selectRow = {
@@ -182,7 +207,9 @@ class ItemTable extends Component {
                     </Col>
                     <Col>
                       {this.state.uploading ? (
-                        <Spinner animation="border" />
+                        <Button>
+                          <Spinner animation="border" />
+                        </Button>
                       ) : (
                         <Button
                           variant="primary"
@@ -203,14 +230,19 @@ class ItemTable extends Component {
                     <SearchBar {...props.searchProps} />
                   </Col>
                   <Col>
-                    <ClearSearchButton className="btn-primary"{...props.searchProps} />
+                    <ClearSearchButton
+                      className="btn-primary"
+                      {...props.searchProps}
+                    />
                   </Col>
                   <Col>
                     <Button variant="danger" onClick={this.handleBtnClick}>
                       Delete Selected
                     </Button>
                     {this.state.refreshing ? (
-                      <Spinner animation="border" />
+                      <Button>
+                        <Spinner animation="border" />
+                      </Button>
                     ) : (
                       <Button
                         className=""
@@ -222,6 +254,19 @@ class ItemTable extends Component {
                         Refresh
                       </Button>
                     )}
+
+                    {!this.state.autoRef ? (
+                      <Button
+                        variant="success"
+                        onClick={this.changeAutoRefresh}
+                      >
+                        Start Auto Refresh
+                      </Button>
+                    ) : (
+                      <Button variant="danger" onClick={this.changeAutoRefresh}>
+                        Stop Auto Refresh
+                      </Button>
+                    )}
                   </Col>
                 </Row>
               </Card>
@@ -230,6 +275,7 @@ class ItemTable extends Component {
             </div>
           )}
         </ToolkitProvider>
+        <PriceChart key={this.props.prices} prices={this.props.prices} getPrices={this.props.getPrices}/>
       </div>
     );
   }

@@ -20,11 +20,12 @@ class Tables extends Component {
     products: null,
   };
   componentDidMount() {
+    console.log(this.props.prices);
     // const script = document.createElement("script");
     // script.src = "/js/sb-admin-2.js";
     // document.body.appendChild(script);
 
-    this.fetchProducts();
+    // this.fetchProducts();
   }
 
   toggleSidebar() {
@@ -101,9 +102,7 @@ class Tables extends Component {
               <div className="sidebar-brand-icon rotate-n-15">
                 <i className="fas fa-chart-line" />
               </div>
-              <div className="sidebar-brand-text mx-3">
-                Stock Checker
-              </div>
+              <div className="sidebar-brand-text mx-3">Stock Checker</div>
             </a>
             {/* Divider */}
             <hr className="sidebar-divider my-0" />
@@ -117,134 +116,10 @@ class Tables extends Component {
             {/* Divider */}
             <hr className="sidebar-divider" />
             {/* Heading */}
-            <div className="sidebar-heading">Interface</div>
             {/* Nav Item - Pages Collapse Menu */}
-            <li className="nav-item">
-              <a
-                className="nav-link collapsed"
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapseTwo"
-                aria-expanded="true"
-                aria-controls="collapseTwo"
-              >
-                <i className="fas fa-fw fa-cog" />
-                <span>Components</span>
-              </a>
-              <div
-                id="collapseTwo"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionSidebar"
-              >
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">Custom Components:</h6>
-                  <a className="collapse-item" href="buttons.html">
-                    Buttons
-                  </a>
-                  <a className="collapse-item" href="cards.html">
-                    Cards
-                  </a>
-                </div>
-              </div>
-            </li>
+
             {/* Nav Item - Utilities Collapse Menu */}
-            <li className="nav-item">
-              <a
-                className="nav-link collapsed"
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapseUtilities"
-                aria-expanded="true"
-                aria-controls="collapseUtilities"
-              >
-                <i className="fas fa-fw fa-wrench" />
-                <span>Utilities</span>
-              </a>
-              <div
-                id="collapseUtilities"
-                className="collapse"
-                aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar"
-              >
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">Custom Utilities:</h6>
-                  <a className="collapse-item" href="utilities-color.html">
-                    Colors
-                  </a>
-                  <a className="collapse-item" href="utilities-border.html">
-                    Borders
-                  </a>
-                  <a className="collapse-item" href="utilities-animation.html">
-                    Animations
-                  </a>
-                  <a className="collapse-item" href="utilities-other.html">
-                    Other
-                  </a>
-                </div>
-              </div>
-            </li>
-            {/* Divider */}
-            <hr className="sidebar-divider" />
-            {/* Heading */}
-            <div className="sidebar-heading">Addons</div>
-            {/* Nav Item - Pages Collapse Menu */}
-            <li className="nav-item">
-              <a
-                className="nav-link collapsed"
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapsePages"
-                aria-expanded="true"
-                aria-controls="collapsePages"
-              >
-                <i className="fas fa-fw fa-folder" />
-                <span>Pages</span>
-              </a>
-              <div
-                id="collapsePages"
-                className="collapse"
-                aria-labelledby="headingPages"
-                data-parent="#accordionSidebar"
-              >
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 className="collapse-header">Login Screens:</h6>
-                  <a className="collapse-item" href="login.html">
-                    Login
-                  </a>
-                  <a className="collapse-item" href="register.html">
-                    Register
-                  </a>
-                  <a className="collapse-item" href="forgot-password.html">
-                    Forgot Password
-                  </a>
-                  <div className="collapse-divider" />
-                  <h6 className="collapse-header">Other Pages:</h6>
-                  <a className="collapse-item" href="404.html">
-                    404 Page
-                  </a>
-                  <a className="collapse-item" href="blank.html">
-                    Blank Page
-                  </a>
-                </div>
-              </div>
-            </li>
-            {/* Nav Item - Charts */}
-            <li className="nav-item">
-              <a className="nav-link" href="charts.html">
-                <i className="fas fa-fw fa-chart-area" />
-                <span>Charts</span>
-              </a>
-            </li>
-            {/* Nav Item - Tables */}
-            <li className="nav-item active">
-              <a className="nav-link" href="tables.html">
-                <i className="fas fa-fw fa-table" />
-                <span>Tables</span>
-              </a>
-            </li>
-            {/* Divider */}
-            <hr className="sidebar-divider d-none d-md-block" />
+
             {/* Sidebar Toggler (Sidebar) */}
             <div className="text-center d-none d-md-inline">
               <button
@@ -269,7 +144,7 @@ class Tables extends Component {
                   <i className="fa fa-bars" />
                 </button>
                 {/* Topbar Search */}
-                <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                {/* <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                   <div className="input-group">
                     <input
                       type="text"
@@ -284,7 +159,7 @@ class Tables extends Component {
                       </button>
                     </div>
                   </div>
-                </form>
+                </form> */}
                 {/* Topbar Navbar */}
                 <ul className="navbar-nav ml-auto">
                   {/* Nav Item - Search Dropdown (Visible Only XS) */}
@@ -538,7 +413,7 @@ class Tables extends Component {
                       aria-expanded="false"
                     >
                       <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                        Valerie Luna
+                        Devan H
                       </span>
                       <img
                         className="img-profile rounded-circle"
@@ -579,13 +454,19 @@ class Tables extends Component {
               <div className="container-fluid">
                 <div className="card shadow mb-4">
                   <div className="card-header py-3">
-                    <h6 className="m-0 font-weight-bold text-primary">
-                      Items
-                    </h6>
+                    <h6 className="m-0 font-weight-bold text-primary">Items</h6>
                   </div>
                   <div className="card-body">
                     <div className="table-responsive">
-                      <ItemTable addItem={this.props.addItem} deleteItem={this.props.deleteItem} getItems={this.props.getItems} items={this.props.items} updateItems={this.props.updateItems}/>
+                      <ItemTable
+                        addItem={this.props.addItem}
+                        deleteItem={this.props.deleteItem}
+                        getItems={this.props.getItems}
+                        items={this.props.items}
+                        updateItems={this.props.updateItems}
+                        prices={this.props.prices}
+                        getPrices={this.props.getPrices}
+                      />
                     </div>
                   </div>
                 </div>
@@ -594,13 +475,6 @@ class Tables extends Component {
             </div>
             {/* End of Main Content */}
             {/* Footer */}
-            <footer className="sticky-footer bg-white">
-              <div className="container my-auto">
-                <div className="copyright text-center my-auto">
-                  <span>Copyright © Your Website 2019</span>
-                </div>
-              </div>
-            </footer>
             {/* End of Footer */}
           </div>
           {/* End of Content Wrapper */}
