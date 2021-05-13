@@ -48,6 +48,7 @@ class ItemTable extends Component {
       ],
     };
   }
+  
   handleBtnClick = () => {
     this.deleteItem(this.state.selected);
   };
@@ -166,6 +167,14 @@ class ItemTable extends Component {
       onSelect: this.handleOnSelect,
       onSelectAll: this.handleOnSelectAll,
     };
+    const rowStyle2 = (row, rowIndex) => {
+      const style = {};
+      if (row.id > 3) {
+        style.backgroundColor = "#c8e6c9";
+      } else {
+        style.backgroundColor = "#00BFFF";
+      }
+    }
     return (
       <div>
         <ToolkitProvider
@@ -173,6 +182,7 @@ class ItemTable extends Component {
           data={this.props.items}
           columns={this.state.columns}
           search
+          rowStyle={rowStyle2}
           bootstrap4
         >
           {(props) => (
@@ -271,7 +281,7 @@ class ItemTable extends Component {
                 </Row>
               </Card>
 
-              <BootstrapTable {...props.baseProps} selectRow={selectRow} />
+              <BootstrapTable {...props.baseProps} selectRow={selectRow} rowStyle={rowStyle2}/>
             </div>
           )}
         </ToolkitProvider>

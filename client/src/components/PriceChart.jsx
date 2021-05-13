@@ -120,7 +120,7 @@ class PriceChart extends Component {
   render() {
     return (
       <div>
-        <Line data={this.state.data} />
+        <Line data={this.state.data} height={100}/>
       </div>
     );
   }

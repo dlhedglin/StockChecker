@@ -13,12 +13,3 @@ const transporter = nodemailer.createTransport({
   });
 
 module.exports = transporter
-//   var message = {
-//     from: "dlhedglin@mail.csuchico.edu",
-//     to: "clasiics@gmail.com",
-//     subject: "Message title",
-//     text: "Plaintext version of the message",
-//     html: "<p>HTML version of the message</p>"
-//   };
-
-// transporter.sendMail(message);

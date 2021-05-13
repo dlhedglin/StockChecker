@@ -55,6 +55,10 @@ class App extends Component {
       url: "/api/products",
     })
       .then((res) => {
+        for(var i = 0; i < res.data.length; i++){
+          res.data[i]["url"].length > 50 ? res.data[i]["url"] = res.data[i]["url"].substr(0, 49) + "..."  : res.data[i]["url"] = res.data[i]["url"]
+        }
+        console.log(res.data)
         this.setState({
           items: res.data,
         });

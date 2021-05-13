@@ -7,12 +7,21 @@ const { SearchBar, ClearSearchButton } = Search;
 
 class ProductList extends Component {
   render() {
+    const rowStyle2 = (row, rowIndex) => {
+      const style = {};
+      if (row.id > 3) {
+        style.backgroundColor = "#c8e6c9";
+      } else {
+        style.backgroundColor = "#00BFFF";
+      }
+    };
     return (
       <div>
         <ToolkitProvider
           keyField="id"
           data={this.props.items}
           columns={this.props.columns}
+          rowStyle={rowStyle2}
           search
           bootstrap4
         >

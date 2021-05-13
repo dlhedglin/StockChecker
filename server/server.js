@@ -19,16 +19,8 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Ok" });
 });
 
-app.get("/api/products", async (req, res, next) => {
-  const items = await prisma.item.findMany();
-  res.json(items);
-});
+
 app.get("/api/prices", async (req, res, next) => {
-  // const prices = await prisma.price.findMany({
-  //   where: {
-  //     itemId: parseInt(req.query["id"]),
-  //   },
-  // });
   const prices = await prisma.price.findMany({
     where: {
       itemId: parseInt(req.query["id"]),
@@ -56,7 +48,7 @@ app.get("/api/query", async (req, res, next) => {
   // });
   let results = await Promise.all(
     items.map(async (item) => {
-      return await getHtml(item["url"], item["keyword"]);
+      return await getHtml(item["url"]);
     })
   );
   let date = new Date();
@@ -91,9 +83,8 @@ app.get("/api/query", async (req, res, next) => {
         price: scraper.parseData(results[i], items[i]["url"]),
       },
     });
-    // await prisma.price
-    // console.log(results[i]);
-    // if (results[i] == -1) {
+
+    // if (inStock == true) {
     //   var message = {
     //     from: "dlhedglin@mail.csuchico.edu",
     //     to: "clasiics@gmail.com",
@@ -103,6 +94,7 @@ app.get("/api/query", async (req, res, next) => {
     //   console.log(message);
     //   transporter.sendMail(message);
     // }
+    
   }
   res.json(results);
 });
@@ -117,6 +109,13 @@ app.post("/api/create", async (req, res, next) => {
   });
   res.json(createItem);
 });
+
+app.get("/api/products", async (req, res, next) => {
+  const items = await prisma.item.findMany();
+  res.json(items);
+});
+
+
 app.post("/api/delete", async (req, res, next) => {
   await prisma.price.deleteMany({
     where: {

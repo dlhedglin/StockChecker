@@ -44,7 +44,9 @@ class Tables extends Component {
       url: "/api/products",
     })
       .then((res) => {
-        console.log(res);
+        for(var i = 0; i < res.data.length; i++){
+          res.data[i]["url"] > 50 ? res.data[i]["url"] = res.data[i]["url"].substr(0, 49)  : res.data[i]["url"] = res.data[i]["url"]
+        }
         this.setState({
           products: res.data,
         });
